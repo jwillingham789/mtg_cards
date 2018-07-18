@@ -29,6 +29,7 @@ export default class Slider extends PureComponent {
         {!loading && (
           <FlatList
             {...rest}
+            numColumns={3}
             refreshControl={
               onRefresh ? (
                 <Refresh refreshing={refreshing} onRefresh={onRefresh} />

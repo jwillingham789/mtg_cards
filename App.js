@@ -6,6 +6,8 @@ import thunkMiddleware from "redux-thunk";
 import appReducer from "./store/reducers";
 import AppNavigator from "./navigation";
 
+console.disableYellowBox = true;
+
 const middleware = [thunkMiddleware];
 
 export const store = createStore(appReducer, applyMiddleware(...middleware));

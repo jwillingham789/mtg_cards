@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 
 import styles from "./styles";
 
@@ -14,10 +14,10 @@ export default class DrawerMenu extends Component {
     const { items, navigation } = this.props;
     return (
       <View style={styles.container}>
-        {/* <Text bold size={18} white style={styles.navHeader}>
-          Sean Hise
+        <Text bold size={18} white style={styles.navHeader}>
+          Jake
         </Text>
-        <View style={styles.navStats}>
+        {/* <View style={styles.navStats}>
           <Text bold white style={styles.navStat}>
             10
           </Text>

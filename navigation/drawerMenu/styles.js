@@ -5,7 +5,6 @@ import globalStyles from "../../globalStyles";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: globalStyles.blue,
     paddingVertical: 40
   },
   navHeader: {

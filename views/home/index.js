@@ -6,6 +6,7 @@ import { getAllCards } from "../../store/actions/cards";
 
 import ListWrapper from "../../hocs/ListWrapper";
 import Slider from "../../components/Slider";
+import Card from "../../components/Card";
 
 import styles from "./styles";
 
@@ -30,13 +31,15 @@ class Home extends Component {
       </View>
     );
   }
-  _renderItem = ({ item }) => {
-    return (
-      <View>
-        <Text>{item.name}</Text>
-      </View>
-    );
-  };
+  _renderItem = ({ item }) => (
+    <Card
+      grid
+      image={item.imageUrl}
+      value={item.name}
+      columns={3}
+      onPress={() => {}}
+    />
+  );
 }
 
 const mapStateToProps = state => {
