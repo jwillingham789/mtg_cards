@@ -1,19 +1,18 @@
 import ProcessRequest from "../../assets/helpers/ProcessRequest";
 import * as types from "../types";
+import { handleError } from "./app";
 
-export const getPosts = channel_id => async (dispatch, getState) => {
+export const getAllCards = () => async dispatch => {
   try {
-    const res = await ProcessRequest(
-      getState,
-      `/channels/${channel_id}/posts/`
-    );
-    dispatch({ type: types.SET_POSTS, posts: res });
+    const res = await ProcessRequest(`/cards`);
+    dispatch(setAllCards(res.cards));
   } catch (error) {
     dispatch(handleError(error));
   }
 };
-export const clearPosts = () => {
+export const setAllCards = cards => {
   return {
-    type: types.CLEAR_CHANNEL_POSTS
+    type: types.SET_ALL_CARDS,
+    cards
   };
 };

@@ -1,4 +1,4 @@
-const API = "https://dev.memmbr.com/api";
+const API = "https://api.magicthegathering.io/v1";
 
 const timeout = (ms, promise) => {
   return new Promise(function(resolve, reject) {
@@ -17,25 +17,13 @@ const checkStatus = (response, timeout) => {
 
 const parseJSON = async response => {
   const res = await response.json();
-  //handle errors here
-  // if (res.error.length > 0) throw { message: res.error[0], status: res.status };
   return res;
 };
 
-export default function processRequest(getState, url, method = "GET", data) {
-  const fullURL = typeof url === "string" ? API + url : url.base + url.url;
-  let headers = {
-    Accept: "application/json",
-    "Content-Type": "application/json; charset=UTF-8"
-  };
-  if (getState) {
-    const state = getState();
-    const token = state.user.user.token;
-    headers = { ...headers, Authorization: `Token ${token}` };
-  }
+export default function processRequest(url, method = "GET", data) {
+  const fullURL = API + url;
   const params = {
-    method,
-    headers
+    method
   };
 
   if (data) params.body = JSON.stringify(data);

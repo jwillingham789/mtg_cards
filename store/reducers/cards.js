@@ -1,25 +1,15 @@
 import * as types from "../types";
 
 const initialState = {
-  posts: [],
-  posts_pinned: []
+  allCards: []
 };
 
-export default function channelReducer(state = initialState, action) {
+export default function cardsReducer(state = initialState, action) {
   switch (action.type) {
-    case types.SET_POSTS: {
+    case types.SET_ALL_CARDS: {
       return {
         ...state,
-        posts: action.posts.posts.filter(p => !p.pinned),
-        posts_pinned: action.posts.posts.filter(p => p.pinned)
-      };
-    }
-
-    case types.CLEAR_CHANNEL_POSTS: {
-      return {
-        ...state,
-        posts: [],
-        posts_pinned: []
+        allCards: action.cards
       };
     }
 
