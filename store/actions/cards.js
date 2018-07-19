@@ -5,7 +5,7 @@ import { handleError } from "./app";
 
 export const getAllCards = params => async (dispatch, getState) => {
   try {
-    const search = queryString.stringify({ ...params, pageSize: 51 });
+    const search = queryString.stringify({ ...params, pageSize: 21 });
     const res = await ProcessRequest(`/cards?${search}`);
     const payload = await res.json();
     const state = getState();

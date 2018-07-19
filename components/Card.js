@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styled from "styled-components/native";
 import {
   TouchableOpacity,
@@ -55,7 +55,7 @@ const anim = {
   bounciness: 2
 };
 
-export default class Card extends Component {
+export default class Card extends PureComponent {
   constructor() {
     super();
     this.state = {

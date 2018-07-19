@@ -9,7 +9,7 @@ import Container from "../../components/Container";
 import Input from "../../components/Input";
 import Slider from "../../components/Slider";
 import Card from "../../components/Card";
-import Picklist from "../../components/Picklist";
+
 import ImageOverlay from "../../components/ImageOverlay";
 
 import styles from "./styles";
@@ -55,9 +55,13 @@ class Home extends Component {
           value={search}
           onChangeText={this._updateSearch}
           onClear={this._updateSearch}
-          filters
           onPress={this._open}
           filterText={filter.label}
+          items={filters}
+          pickerValue={filter.value}
+          onValueChange={this._setFilter}
+          open={open}
+          close={this._close}
         />
         <Slider
           data={allCards}
@@ -68,13 +72,6 @@ class Home extends Component {
           onFetchMore={this._fetchMore}
           disableFetchMore={paginating}
           doneFetching={allCards.length == totalCount}
-        />
-        <Picklist
-          open={open}
-          close={this._close}
-          items={filters}
-          value={filter.value}
-          onValueChange={this._setFilter}
         />
         <ImageOverlay
           open={imageOpen}

@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { StyleSheet, Platform, Picker } from "react-native";
 
 import SlideModal from "./blocks/SlideModal";
+import Text from "./blocks/Text";
+
+import globalStyles from "../globalStyles";
 
 export default class Picklist extends Component {
   render() {
@@ -31,11 +34,8 @@ export default class Picklist extends Component {
       <Picker
         selectedValue={value}
         onValueChange={onValueChange}
-        style={[
-          size,
-          styles.androidPicker,
-          { color: transparent ? "#fff" : "#000" }
-        ]}
+        style={styles.androidPicker}
+        itemStyle={styles.itemStyle}
       >
         {items.map((i, index) => (
           <Picker.Item key={index} label={i.label} value={i.value} />
@@ -50,7 +50,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   androidPicker: {
-    width: "100%",
+    position: "absolute",
+    right: 0,
+    top: 0,
+    height: 45,
+    width: 70,
     backgroundColor: "transparent"
   }
 });

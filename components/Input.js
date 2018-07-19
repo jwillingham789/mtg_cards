@@ -3,13 +3,19 @@ import styled from "styled-components/native";
 import { TextInput, View, TouchableOpacity } from "react-native";
 
 import Text from "./blocks/Text";
+import Picklist from "./Picklist";
 
 import globalStyles from "../globalStyles";
 
 const Container = styled.View`
-  flex-direction: row;
   width: 100%;
   border-radius: 2px;
+`;
+const Inner = styled.View`
+  height: 45px;
+  border-radius: 2px;
+  flex-direction: row;
+  position: relative;
 `;
 const Input = styled.TextInput`
   background-color: #fff;
@@ -38,20 +44,33 @@ export default class StyledInput extends PureComponent {
     const {
       containerStyle,
       onPress,
-      filters,
       filterText,
+      open,
+      close,
+      items,
+      pickerValue,
+      onValueChange,
       ...rest
     } = this.props;
     return (
       <Container style={containerStyle}>
-        <Input {...rest} />
-        {filters && (
-          <Filters onPress={onPress} activeOpacity={0.7}>
-            <Text size={16} white>
-              {filterText.toUpperCase()}
-            </Text>
-          </Filters>
-        )}
+        <Inner>
+          <Input {...rest} underlineColorAndroid="transparent" />
+          {items && (
+            <Filters onPress={onPress} activeOpacity={0.7}>
+              <Text size={16} white>
+                {filterText.toUpperCase()}
+              </Text>
+            </Filters>
+          )}
+          <Picklist
+            open={open}
+            close={close}
+            items={items}
+            value={pickerValue}
+            onValueChange={onValueChange}
+          />
+        </Inner>
       </Container>
     );
   }
