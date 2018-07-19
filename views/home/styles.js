@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 
-import globalStyles from "../../globalStyles";
-
-export default StyleSheet.create({});
+export default StyleSheet.create({
+  inputContainer: {
+    padding: 10
+  }
+});

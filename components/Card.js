@@ -12,6 +12,8 @@ import {
 
 import globalStyles from "../globalStyles";
 
+import placeholder from "../assets/images/placeholder.jpg";
+
 const Container = styled.TouchableOpacity`
   width: ${p => p.width}px;
   height: ${p => p.height}px;
@@ -23,8 +25,8 @@ const Container = styled.TouchableOpacity`
 const ImageContainer = styled.View`
   background-color: #fff;
   border-radius: 5px;
-  shadow-offset: 1px 10px;
-  shadow-radius: 10px;
+  shadow-offset: 1px 5px;
+  shadow-radius: 5px;
   shadow-color: #000;
 `;
 const AnimatedImageContainer = Animated.createAnimatedComponent(ImageContainer);
@@ -125,6 +127,7 @@ export default class Card extends Component {
     } = this.props;
     const newWidth = globalStyles.width / columns - 14;
     const newHeight = newWidth * 1.4;
+    const source = image ? { uri: image } : placeholder;
     return (
       <Container
         {...rest}
@@ -153,7 +156,7 @@ export default class Card extends Component {
           <CardImage
             width={newWidth}
             height={newHeight}
-            source={{ uri: image }}
+            source={source}
             resizeMode="cover"
             onLoadEnd={this.fadeIn}
           />

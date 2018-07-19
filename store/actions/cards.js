@@ -3,12 +3,13 @@ import ProcessRequest from "../../assets/helpers/ProcessRequest";
 import * as types from "../types";
 import { handleError } from "./app";
 
-export const getAllCards = params => async dispatch => {
+export const getAllCards = params => async (dispatch, getState) => {
   try {
     const search = queryString.stringify({ ...params, pageSize: 51 });
     const res = await ProcessRequest(`/cards?${search}`);
     const payload = await res.json();
-    if (params)
+    const state = getState();
+    if (params.page > state.cards.page)
       dispatch(setNextCards(payload.cards, res.headers.map, params.page));
     else dispatch(setAllCards(payload.cards, res.headers.map));
   } catch (error) {

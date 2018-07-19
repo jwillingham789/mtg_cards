@@ -18,8 +18,13 @@ const defaultHeader = {
       color: "transparent"
     },
     headerStyle: {
-      backgroundColor: globalStyles.black,
-      borderBottomWidth: 0
+      position: "absolute",
+      backgroundColor: "transparent",
+      borderBottomWidth: 0,
+      zIndex: 100,
+      top: 0,
+      left: 0,
+      right: 0
     }
   })
 };

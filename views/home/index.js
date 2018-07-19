@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
 import { connect } from "react-redux";
+import debounce from "lodash/debounce";
 
 import { getAllCards } from "../../store/actions/cards";
 
 import ListWrapper from "../../hocs/ListWrapper";
 import Container from "../../components/Container";
 import Content from "../../components/Content";
+import Input from "../../components/Input";
 import Slider from "../../components/Slider";
 import Card from "../../components/Card";
 
@@ -16,9 +17,15 @@ class Home extends Component {
   static navigationOptions = {
     title: "Home"
   };
+  constructor() {
+    super();
+    this.state = {
+      search: "",
+      fetchData: debounce(this._search, 500)
+    };
+  }
   componentDidMount() {
-    const { asyncLoad, dispatch } = this.props;
-    asyncLoad(dispatch(getAllCards()));
+    this._search("");
   }
   render() {
     const {
@@ -28,8 +35,16 @@ class Home extends Component {
       paginating,
       totalCount
     } = this.props;
+    const { search } = this.state;
     return (
       <Container>
+        <Input
+          containerStyle={styles.inputContainer}
+          placeholder={"Search..."}
+          value={search}
+          onChangeText={this._updateSearch}
+          onClear={this._updateSearch}
+        />
         <Content>
           <Slider
             data={allCards}
@@ -39,12 +54,17 @@ class Home extends Component {
             onRefresh={this._onRefresh}
             onFetchMore={this._fetchMore}
             disableFetchMore={paginating}
-            doneFetching={allCards.length === totalCount}
+            doneFetching={allCards.length == totalCount}
           />
         </Content>
       </Container>
     );
   }
+  _updateSearch = text => {
+    const { fetchData } = this.state;
+    this.setState({ search: text || "" });
+    fetchData(text);
+  };
   _renderItem = ({ item }) => (
     <Card
       grid
@@ -60,7 +80,18 @@ class Home extends Component {
   };
   _onRefresh = () => {
     const { asyncRefresh, dispatch } = this.props;
-    asyncRefresh(dispatch(getAllCards()));
+    asyncRefresh(dispatch(getAllCards({ page: 1 })));
+  };
+  _search = text => {
+    const { asyncLoad, dispatch, page } = this.props;
+    asyncLoad(
+      dispatch(
+        getAllCards({
+          page,
+          name: text
+        })
+      )
+    );
   };
 }
 

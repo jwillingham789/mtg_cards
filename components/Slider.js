@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { View, Text, FlatList } from "react-native";
 
 import Button from "./Button";
+import NoResult from "./blocks/NoResult";
 import Spinner from "./blocks/Spinner";
 import Refresh from "./blocks/Refresh";
 import globalStyles from "../globalStyles";
@@ -16,13 +17,13 @@ export default class Slider extends PureComponent {
   render() {
     const {
       onRefresh,
-      hasSearched,
       loading,
       refreshing,
       containerStyle,
       onFetchMore,
       doneFetching,
       disableFetchMore,
+      searched,
       ...rest
     } = this.props;
     return (
@@ -41,14 +42,10 @@ export default class Slider extends PureComponent {
                 <Refresh refreshing={refreshing} onRefresh={onRefresh} />
               ) : null
             }
-            keyExtractor={this.keyExtractor}
             ListEmptyComponent={
-              hasSearched ? (
-                <View>
-                  <Text>No Results Found</Text>
-                </View>
-              ) : null
+              <NoResult style={{ width: globalStyles.width - 20 }} />
             }
+            keyExtractor={this.keyExtractor}
           />
         )}
         {onFetchMore &&
