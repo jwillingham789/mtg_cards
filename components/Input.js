@@ -31,7 +31,7 @@ const Input = styled.TextInput`
 `;
 const Filters = styled.TouchableOpacity`
   height: 45px;
-  width: 70px;
+  width: 100px;
   justify-content: center;
   align-items: center;
   background-color: ${globalStyles.orange};
@@ -55,7 +55,13 @@ export default class StyledInput extends PureComponent {
     return (
       <Container style={containerStyle}>
         <Inner>
-          <Input {...rest} underlineColorAndroid="transparent" />
+          <Input
+            {...rest}
+            underlineColorAndroid="transparent"
+            autoCapitalize={"none"}
+            autoCorrect={false}
+            clearButtonMode="while-editing"
+          />
           {items && (
             <Filters onPress={onPress} activeOpacity={0.7}>
               <Text size={16} white>

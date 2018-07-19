@@ -19,7 +19,7 @@ const defaultHeader = {
     gesturesEnabled: false,
     headerRight: <Hamburger open={() => navigation.navigate("DrawerOpen")} />,
     headerTitleStyle: {
-      fontSize: 24,
+      fontSize: 20,
       fontFamily: globalStyles.font
     },
     headerBackTitleStyle: {
@@ -40,6 +40,7 @@ const defaultHeader = {
 
 import Welcome from "../views/welcome";
 import Home from "../views/home";
+import Details from "../views/details";
 
 const WelcomeStack = StackNavigator(
   {
@@ -61,6 +62,10 @@ const MainStack = StackNavigator(
     Home: {
       ...defaultHeader,
       screen: Home
+    },
+    Details: {
+      ...defaultHeader,
+      screen: Details
     }
   },
   {

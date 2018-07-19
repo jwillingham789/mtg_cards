@@ -16,7 +16,7 @@ const StyledButton = styled.TouchableOpacity`
   background-color: ${globalStyles.orange};
 `;
 const Label = styled(Text)`
-  font-size: 24px;
+  font-size: 20px;
   color: #fff;
 `;
 

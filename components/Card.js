@@ -19,12 +19,12 @@ const Container = styled.TouchableOpacity`
   height: ${p => p.height}px;
   margin-right: 10px;
   margin-bottom: 10px;
-  border-radius: 5px;
+  border-radius: ${p => p.radius}px;
   elevation: 1;
 `;
 const ImageContainer = styled.View`
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: ${p => p.radius}px;
   shadow-offset: 1px 5px;
   shadow-radius: 5px;
   shadow-color: #000;
@@ -40,13 +40,13 @@ const FadeBox = styled.View`
   z-index: 10;
   justify-content: center;
   align-items: center;
-  border-radius: 5px;
+  border-radius: ${p => p.radius}px;
 `;
 const AnimatedFade = Animated.createAnimatedComponent(FadeBox);
 const CardImage = styled.Image`
   width: 100%;
   height: 100%;
-  border-radius: 5px;
+  border-radius: ${p => p.radius}px;
   overflow: hidden;
 `;
 
@@ -58,9 +58,6 @@ const anim = {
 export default class Card extends PureComponent {
   constructor() {
     super();
-    this.state = {
-      expanded: false
-    };
     this.fadeValue = new Animated.Value(0);
     this.cardValue = new Animated.Value(0);
     this.opacityValue = new Animated.Value(0);
@@ -109,49 +106,46 @@ export default class Card extends PureComponent {
     ]).start();
   };
   onPress = () => {
-    const { expand, onPress } = this.props;
-    if (expand) this.setState({ expanded: true });
-    else if (onPress) setTimeout(this.clickHandler, 200);
+    const { onPress } = this.props;
+    if (onPress) setTimeout(this.clickHandler, 200);
   };
   clickHandler = () => {
     const { onPress, data, index } = this.props;
     onPress(data, index);
   };
+  onLongPress = () => {
+    const { onLongPress, data, index } = this.props;
+    if (onLongPress) onLongPress(data, index);
+  };
   render() {
-    const {
-      columns,
-      image,
-      number,
-      value,
-      subvalue,
-      volume,
-      grid,
-      onPress,
-      ...rest
-    } = this.props;
+    const { columns, image, onPress, ...rest } = this.props;
     const newWidth = globalStyles.width / columns - 14;
     const newHeight = newWidth * 1.4;
+    const radius = newWidth / 18;
     const source = image ? { uri: image } : placeholder;
     return (
       <Container
         {...rest}
-        grid={grid}
         width={newWidth}
         height={newHeight}
         disabled={!onPress}
         onPressIn={this.clickStart}
         onPress={this.onPress}
+        onLongPress={this.onLongPress}
         onPressOut={this.clickEnd}
         activeOpacity={1}
+        radius={radius}
       >
         <AnimatedFade
           style={{ opacity: this.fade }}
           width={newWidth}
           height={newHeight}
+          radius={radius}
         >
           <ActivityIndicator size="small" color="#FFF" />
         </AnimatedFade>
         <AnimatedImageContainer
+          radius={radius}
           style={[
             { transform: [{ scale: this.scale }] },
             { shadowOpacity: this.opacity }
@@ -161,17 +155,11 @@ export default class Card extends PureComponent {
             width={newWidth}
             height={newHeight}
             source={source}
-            resizeMode="cover"
+            resizeMode="stretch"
             onLoadEnd={this.fadeIn}
+            radius={radius}
           />
         </AnimatedImageContainer>
-        {/* {this.state.expanded && (
-          <ImageOverlay
-            source={source}
-            open={this.state.expanded}
-            close={() => this.setState({ expanded: false })}
-          />
-        )} */}
       </Container>
     );
   }

@@ -15,9 +15,17 @@ import ImageOverlay from "../../components/ImageOverlay";
 import styles from "./styles";
 
 const filters = [
-  { label: "Name", value: "name" },
-  { label: "Type", value: "type" },
-  { label: "Set", value: "setName" }
+  { label: "Name", value: "name", placeholder: "thalia, swamp, etc." },
+  { label: "Type", value: "type", placeholder: "creature, land, etc." },
+  { label: "Set", value: "setName", placeholder: "tenth, mirrodin, etc." },
+  { label: "Color", value: "colors", placeholder: "blue, red, etc." },
+  {
+    label: "Supertype",
+    value: "supertypes",
+    placeholder: "legendary, snow, etc."
+  },
+  { label: "Subtype", value: "subtypes", placeholder: "human, aura, etc." },
+  { label: "Rarity", value: "rarity", placeholder: "basic, rare, etc.." }
 ];
 
 class Home extends Component {
@@ -51,7 +59,7 @@ class Home extends Component {
       <Container>
         <Input
           containerStyle={styles.inputContainer}
-          placeholder={"Search..."}
+          placeholder={filter.placeholder}
           value={search}
           onChangeText={this._updateSearch}
           onClear={this._updateSearch}
@@ -102,9 +110,14 @@ class Home extends Component {
       image={item.imageUrl}
       value={item.name}
       columns={3}
-      onPress={this._selectCard}
+      onPress={this._navigateToDetails}
+      onLongPress={this._selectCard}
     />
   );
+  _navigateToDetails = item => {
+    const { navigation } = this.props;
+    navigation.navigate({ routeName: "Details", params: { card: item } });
+  };
   _selectCard = (item, index) => {
     this.setState({
       imageOpen: true,
