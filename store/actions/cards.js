@@ -11,7 +11,7 @@ export const getAllCards = params => async (dispatch, getState) => {
     const state = getState();
     if (params.page > state.cards.page)
       dispatch(setNextCards(payload.cards, res.headers.map, params.page));
-    else dispatch(setAllCards(payload.cards, res.headers.map));
+    else dispatch(setAllCards(payload.cards, res.headers.map, params.page));
   } catch (error) {
     dispatch(handleError(error));
   }
@@ -24,10 +24,11 @@ export const setNextCards = (cards, headers, page) => {
     page
   };
 };
-export const setAllCards = (cards, headers) => {
+export const setAllCards = (cards, headers, page) => {
   return {
     type: types.SET_ALL_CARDS,
     cards,
-    headers
+    headers,
+    page
   };
 };

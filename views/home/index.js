@@ -10,8 +10,15 @@ import Content from "../../components/Content";
 import Input from "../../components/Input";
 import Slider from "../../components/Slider";
 import Card from "../../components/Card";
+import Picklist from "../../components/Picklist";
 
 import styles from "./styles";
+
+const filters = [
+  { label: "Name", value: "name" },
+  { label: "Type", value: "type" },
+  { label: "Set", value: "setName" }
+];
 
 class Home extends Component {
   static navigationOptions = {
@@ -21,6 +28,8 @@ class Home extends Component {
     super();
     this.state = {
       search: "",
+      open: false,
+      filter: filters[0],
       fetchData: debounce(this._search, 500)
     };
   }
@@ -35,7 +44,7 @@ class Home extends Component {
       paginating,
       totalCount
     } = this.props;
-    const { search } = this.state;
+    const { search, open, filter } = this.state;
     return (
       <Container>
         <Input
@@ -44,6 +53,9 @@ class Home extends Component {
           value={search}
           onChangeText={this._updateSearch}
           onClear={this._updateSearch}
+          filters
+          onPress={this._open}
+          filterText={filter.label}
         />
         <Content>
           <Slider
@@ -57,12 +69,26 @@ class Home extends Component {
             doneFetching={allCards.length == totalCount}
           />
         </Content>
+        <Picklist
+          open={open}
+          close={this._close}
+          items={filters}
+          value={filter.value}
+          onValueChange={this._setFilter}
+        />
       </Container>
     );
   }
+  _open = () => this.setState({ open: true });
+  _close = () => this.setState({ open: false });
+  _setFilter = value => {
+    this.setState({ filter: filters.find(f => f.value === value) }, () => {
+      if (this.state.search) this._search(this.state.search);
+    });
+  };
   _updateSearch = text => {
     const { fetchData } = this.state;
-    this.setState({ search: text || "" });
+    this.setState({ search: text });
     fetchData(text);
   };
   _renderItem = ({ item }) => (
@@ -76,17 +102,28 @@ class Home extends Component {
   );
   _fetchMore = () => {
     const { asyncPaginate, dispatch, page } = this.props;
-    asyncPaginate(dispatch(getAllCards({ page: page + 1 })));
+    const { filter, search } = this.state;
+    const params = {
+      page: page + 1,
+      [filter.value]: search
+    };
+    asyncPaginate(dispatch(getAllCards(params)));
   };
   _onRefresh = () => {
     const { asyncRefresh, dispatch } = this.props;
-    asyncRefresh(dispatch(getAllCards({ page: 1 })));
+    const { filter, search } = this.state;
+    const params = {
+      page: 1,
+      [filter.value]: search
+    };
+    asyncRefresh(dispatch(getAllCards(params)));
   };
-  _search = text => {
-    const { asyncLoad, dispatch, page } = this.props;
+  _search = (text, page = 1) => {
+    const { asyncLoad, dispatch } = this.props;
+    const { filter } = this.state;
     let params = {
       page,
-      name: text
+      [filter.value]: text
     };
     if (!text) params = { ...params, random: true };
     asyncLoad(dispatch(getAllCards(params)));

@@ -9,11 +9,12 @@ const initialState = {
 export default function cardsReducer(state = initialState, action) {
   switch (action.type) {
     case types.SET_ALL_CARDS: {
-      const { cards, headers } = action;
+      const { cards, headers, page } = action;
       return {
         ...state,
         allCards: cards,
-        totalCount: headers["total-count"][0]
+        totalCount: headers["total-count"][0],
+        page: page
       };
     }
     case types.SET_NEXT_CARDS: {
