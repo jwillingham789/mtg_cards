@@ -22,7 +22,7 @@ const filters = [
 
 class Home extends Component {
   static navigationOptions = {
-    title: "Home"
+    title: "Search"
   };
   constructor() {
     super();
