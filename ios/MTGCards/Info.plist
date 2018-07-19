@@ -45,8 +45,6 @@
 		<string>Beleren Bold.ttf</string>
 		<string>Beleren-Bold.ttf</string>
 	</array>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

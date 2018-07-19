@@ -5,6 +5,14 @@ import Drawer from "./drawerMenu";
 
 import globalStyles from "../globalStyles";
 
+const defaultConfig = {
+  transitionConfig: () => ({
+    transitionSpec: {
+      duration: 0
+    }
+  })
+};
+
 const defaultHeader = {
   navigationOptions: ({ navigation }) => ({
     headerTintColor: globalStyles.gray,
@@ -43,7 +51,8 @@ const WelcomeStack = StackNavigator(
     }
   },
   {
-    initialRouteName: "Welcome"
+    initialRouteName: "Welcome",
+    ...defaultConfig
   }
 );
 
@@ -55,7 +64,8 @@ const MainStack = StackNavigator(
     }
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Home",
+    ...defaultConfig
   }
 );
 
@@ -74,7 +84,8 @@ const AppNavigator = DrawerNavigator(
   {
     initialRouteName: "WelcomeStack",
     drawerPosition: "right",
-    contentComponent: props => <Drawer {...props} />
+    contentComponent: props => <Drawer {...props} />,
+    ...defaultConfig
   }
 );
 
