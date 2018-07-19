@@ -111,7 +111,11 @@ export default class Card extends Component {
   onPress = () => {
     const { expand, onPress } = this.props;
     if (expand) this.setState({ expanded: true });
-    else if (onPress) setTimeout(onPress, 200);
+    else if (onPress) setTimeout(this.clickHandler, 200);
+  };
+  clickHandler = () => {
+    const { onPress, data, index } = this.props;
+    onPress(data, index);
   };
   render() {
     const {

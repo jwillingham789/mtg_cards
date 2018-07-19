@@ -11,6 +11,7 @@ import Input from "../../components/Input";
 import Slider from "../../components/Slider";
 import Card from "../../components/Card";
 import Picklist from "../../components/Picklist";
+import ImageOverlay from "../../components/ImageOverlay";
 
 import styles from "./styles";
 
@@ -30,6 +31,8 @@ class Home extends Component {
       search: "",
       open: false,
       filter: filters[0],
+      active: {},
+      imageOpen: false,
       fetchData: debounce(this._search, 500)
     };
   }
@@ -44,7 +47,7 @@ class Home extends Component {
       paginating,
       totalCount
     } = this.props;
-    const { search, open, filter } = this.state;
+    const { search, open, filter, imageOpen, active } = this.state;
     return (
       <Container>
         <Input
@@ -76,11 +79,17 @@ class Home extends Component {
           value={filter.value}
           onValueChange={this._setFilter}
         />
+        <ImageOverlay
+          open={imageOpen}
+          close={this._closeImage}
+          image={active.imageUrl}
+        />
       </Container>
     );
   }
   _open = () => this.setState({ open: true });
   _close = () => this.setState({ open: false });
+  _closeImage = () => this.setState({ imageOpen: false });
   _setFilter = value => {
     this.setState({ filter: filters.find(f => f.value === value) }, () => {
       if (this.state.search) this._search(this.state.search);
@@ -91,15 +100,23 @@ class Home extends Component {
     this.setState({ search: text });
     fetchData(text);
   };
-  _renderItem = ({ item }) => (
+  _renderItem = ({ item, index }) => (
     <Card
+      data={item}
+      index={index}
       grid
       image={item.imageUrl}
       value={item.name}
       columns={3}
-      onPress={() => {}}
+      onPress={this._selectCard}
     />
   );
+  _selectCard = (item, index) => {
+    this.setState({
+      imageOpen: true,
+      active: item
+    });
+  };
   _fetchMore = () => {
     const { asyncPaginate, dispatch, page } = this.props;
     const { filter, search } = this.state;
