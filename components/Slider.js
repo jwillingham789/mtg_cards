@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import styled from "styled-components/native";
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, ScrollView } from "react-native";
 
 import Button from "./Button";
 import NoResult from "./blocks/NoResult";
@@ -10,6 +10,9 @@ import globalStyles from "../globalStyles";
 
 const Loader = styled.View`
   padding: 10px;
+`;
+const Scroll = styled.ScrollView`
+  flex: 1;
 `;
 
 export default class Slider extends PureComponent {
@@ -27,7 +30,13 @@ export default class Slider extends PureComponent {
       ...rest
     } = this.props;
     return (
-      <View style={{ paddingLeft: 10, paddingTop: 10, paddingBottom: 10 }}>
+      <Scroll
+        refreshControl={
+          onRefresh ? (
+            <Refresh refreshing={refreshing} onRefresh={onRefresh} />
+          ) : null
+        }
+      >
         {loading && (
           <Loader>
             <Spinner />
@@ -36,12 +45,12 @@ export default class Slider extends PureComponent {
         {!loading && (
           <FlatList
             {...rest}
+            contentContainerStyle={{
+              paddingLeft: 10,
+              paddingTop: 10,
+              paddingBottom: 10
+            }}
             numColumns={3}
-            refreshControl={
-              onRefresh ? (
-                <Refresh refreshing={refreshing} onRefresh={onRefresh} />
-              ) : null
-            }
             ListEmptyComponent={
               <NoResult style={{ width: globalStyles.width - 20 }} />
             }
@@ -52,13 +61,17 @@ export default class Slider extends PureComponent {
           !doneFetching &&
           !loading && (
             <Button
-              style={{ width: globalStyles.width - 20, marginTop: 10 }}
+              style={{
+                width: globalStyles.width - 20,
+                marginLeft: 10,
+                marginBottom: 10
+              }}
               onPress={onFetchMore}
               loading={disableFetchMore}
               text={"Load More"}
             />
           )}
-      </View>
+      </Scroll>
     );
   }
 }

@@ -6,7 +6,6 @@ import { getAllCards } from "../../store/actions/cards";
 
 import ListWrapper from "../../hocs/ListWrapper";
 import Container from "../../components/Container";
-import Content from "../../components/Content";
 import Input from "../../components/Input";
 import Slider from "../../components/Slider";
 import Card from "../../components/Card";
@@ -60,18 +59,16 @@ class Home extends Component {
           onPress={this._open}
           filterText={filter.label}
         />
-        <Content>
-          <Slider
-            data={allCards}
-            renderItem={this._renderItem}
-            loading={loading}
-            refreshing={refreshing}
-            onRefresh={this._onRefresh}
-            onFetchMore={this._fetchMore}
-            disableFetchMore={paginating}
-            doneFetching={allCards.length == totalCount}
-          />
-        </Content>
+        <Slider
+          data={allCards}
+          renderItem={this._renderItem}
+          loading={loading}
+          refreshing={refreshing}
+          onRefresh={this._onRefresh}
+          onFetchMore={this._fetchMore}
+          disableFetchMore={paginating}
+          doneFetching={allCards.length == totalCount}
+        />
         <Picklist
           open={open}
           close={this._close}
@@ -129,10 +126,11 @@ class Home extends Component {
   _onRefresh = () => {
     const { asyncRefresh, dispatch } = this.props;
     const { filter, search } = this.state;
-    const params = {
+    let params = {
       page: 1,
       [filter.value]: search
     };
+    if (!search) params = { ...params, random: true };
     asyncRefresh(dispatch(getAllCards(params)));
   };
   _search = (text, page = 1) => {
