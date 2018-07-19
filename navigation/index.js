@@ -3,11 +3,24 @@ import { StackNavigator, DrawerNavigator } from "react-navigation";
 import Hamburger from "./hamburger";
 import Drawer from "./drawerMenu";
 
+import globalStyles from "../globalStyles";
+
 const defaultHeader = {
   navigationOptions: ({ navigation }) => ({
-    headerTintColor: "#fff",
+    headerTintColor: globalStyles.gray,
     gesturesEnabled: false,
-    headerRight: <Hamburger open={() => navigation.navigate("DrawerOpen")} />
+    headerRight: <Hamburger open={() => navigation.navigate("DrawerOpen")} />,
+    headerTitleStyle: {
+      fontSize: 16
+    },
+    headerBackTitleStyle: {
+      fontSize: 0,
+      color: "transparent"
+    },
+    headerStyle: {
+      backgroundColor: globalStyles.black,
+      borderBottomWidth: 0
+    }
   })
 };
 

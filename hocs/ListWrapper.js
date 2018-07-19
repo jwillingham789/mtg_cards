@@ -6,7 +6,8 @@ const ListWrapper = WrappedComponent => {
       super();
       this.state = {
         loading: false,
-        refreshing: false
+        refreshing: false,
+        paginating: false
       };
     }
     asyncLoad = async action => {
@@ -19,6 +20,11 @@ const ListWrapper = WrappedComponent => {
       await action;
       this.setState({ refreshing: false });
     };
+    asyncPaginate = async action => {
+      this.setState({ paginating: true });
+      await action;
+      this.setState({ paginating: false });
+    };
     render() {
       return (
         <WrappedComponent
@@ -26,6 +32,7 @@ const ListWrapper = WrappedComponent => {
           {...this.props}
           asyncLoad={this.asyncLoad}
           asyncRefresh={this.asyncRefresh}
+          asyncPaginate={this.asyncPaginate}
         />
       );
     }

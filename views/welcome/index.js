@@ -8,7 +8,6 @@ import logo from "../../assets/images/logo.png";
 
 export default class Welcome extends PureComponent {
   render() {
-    console.log(this.props);
     return (
       <View style={styles.container}>
         <Image source={logo} style={styles.logo} />

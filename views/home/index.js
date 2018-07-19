@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { getAllCards } from "../../store/actions/cards";
 
 import ListWrapper from "../../hocs/ListWrapper";
+import Container from "../../components/Container";
+import Content from "../../components/Content";
 import Slider from "../../components/Slider";
 import Card from "../../components/Card";
 
@@ -19,16 +21,28 @@ class Home extends Component {
     asyncLoad(dispatch(getAllCards()));
   }
   render() {
-    const { allCards, loading, refreshing } = this.props;
+    const {
+      allCards,
+      loading,
+      refreshing,
+      paginating,
+      totalCount
+    } = this.props;
     return (
-      <View>
-        <Slider
-          data={allCards}
-          renderItem={this._renderItem}
-          loading={loading}
-          refreshing={refreshing}
-        />
-      </View>
+      <Container>
+        <Content>
+          <Slider
+            data={allCards}
+            renderItem={this._renderItem}
+            loading={loading}
+            refreshing={refreshing}
+            onRefresh={this._onRefresh}
+            onFetchMore={this._fetchMore}
+            disableFetchMore={paginating}
+            doneFetching={allCards.length === totalCount}
+          />
+        </Content>
+      </Container>
     );
   }
   _renderItem = ({ item }) => (
@@ -40,12 +54,22 @@ class Home extends Component {
       onPress={() => {}}
     />
   );
+  _fetchMore = () => {
+    const { asyncPaginate, dispatch, page } = this.props;
+    asyncPaginate(dispatch(getAllCards({ page: page + 1 })));
+  };
+  _onRefresh = () => {
+    const { asyncRefresh, dispatch } = this.props;
+    asyncRefresh(dispatch(getAllCards()));
+  };
 }
 
 const mapStateToProps = state => {
   const { cards } = state;
   return {
-    allCards: cards.allCards
+    allCards: cards.allCards,
+    totalCount: cards.totalCount,
+    page: cards.page
   };
 };
 

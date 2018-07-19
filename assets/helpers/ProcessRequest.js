@@ -15,11 +15,6 @@ const checkStatus = (response, timeout) => {
   throw { message: response.status, status: response.status };
 };
 
-const parseJSON = async response => {
-  const res = await response.json();
-  return res;
-};
-
 export default function processRequest(url, method = "GET", data) {
   const fullURL = API + url;
   const params = {
@@ -31,7 +26,6 @@ export default function processRequest(url, method = "GET", data) {
     20000,
     fetch(fullURL, params)
       .then(checkStatus, timeout)
-      .then(parseJSON)
       .catch(error => {
         throw error;
       })

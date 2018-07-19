@@ -123,7 +123,7 @@ export default class Card extends Component {
       onPress,
       ...rest
     } = this.props;
-    const newWidth = globalStyles.width / columns - 10;
+    const newWidth = globalStyles.width / columns - 14;
     const newHeight = newWidth * 1.4;
     return (
       <Container

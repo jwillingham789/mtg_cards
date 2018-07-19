@@ -1,18 +1,32 @@
+import queryString from "query-string";
 import ProcessRequest from "../../assets/helpers/ProcessRequest";
 import * as types from "../types";
 import { handleError } from "./app";
 
-export const getAllCards = () => async dispatch => {
+export const getAllCards = params => async dispatch => {
   try {
-    const res = await ProcessRequest(`/cards`);
-    dispatch(setAllCards(res.cards));
+    const search = queryString.stringify({ ...params, pageSize: 51 });
+    const res = await ProcessRequest(`/cards?${search}`);
+    const payload = await res.json();
+    if (params)
+      dispatch(setNextCards(payload.cards, res.headers.map, params.page));
+    else dispatch(setAllCards(payload.cards, res.headers.map));
   } catch (error) {
     dispatch(handleError(error));
   }
 };
-export const setAllCards = cards => {
+export const setNextCards = (cards, headers, page) => {
+  return {
+    type: types.SET_NEXT_CARDS,
+    cards,
+    headers,
+    page
+  };
+};
+export const setAllCards = (cards, headers) => {
   return {
     type: types.SET_ALL_CARDS,
-    cards
+    cards,
+    headers
   };
 };
