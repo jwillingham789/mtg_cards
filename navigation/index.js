@@ -11,7 +11,8 @@ const defaultHeader = {
     gesturesEnabled: false,
     headerRight: <Hamburger open={() => navigation.navigate("DrawerOpen")} />,
     headerTitleStyle: {
-      fontSize: 16
+      fontSize: 24,
+      fontFamily: globalStyles.font
     },
     headerBackTitleStyle: {
       fontSize: 0,
@@ -29,14 +30,6 @@ const defaultHeader = {
   })
 };
 
-const defaultTransitionConfig = {
-  transitionConfig: () => ({
-    transitionSpec: {
-      duration: 0
-    }
-  })
-};
-
 import Welcome from "../views/welcome";
 import Home from "../views/home";
 
@@ -50,8 +43,7 @@ const WelcomeStack = StackNavigator(
     }
   },
   {
-    initialRouteName: "Welcome",
-    ...defaultTransitionConfig
+    initialRouteName: "Welcome"
   }
 );
 
@@ -63,8 +55,7 @@ const MainStack = StackNavigator(
     }
   },
   {
-    initialRouteName: "Home",
-    ...defaultTransitionConfig
+    initialRouteName: "Home"
   }
 );
 
@@ -83,8 +74,7 @@ const AppNavigator = DrawerNavigator(
   {
     initialRouteName: "WelcomeStack",
     drawerPosition: "right",
-    contentComponent: props => <Drawer {...props} />,
-    ...defaultTransitionConfig
+    contentComponent: props => <Drawer {...props} />
   }
 );
 

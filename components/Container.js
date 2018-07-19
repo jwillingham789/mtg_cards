@@ -12,9 +12,9 @@ const StyledImage = styled.ImageBackground`
   height: ${globalStyles.height};
 `;
 
-const Container = ({ children, ...rest }) => {
+const Container = ({ children, source, ...rest }) => {
   return (
-    <StyledImage {...rest} source={background}>
+    <StyledImage {...rest} source={source || background}>
       {children}
     </StyledImage>
   );

@@ -84,14 +84,12 @@ class Home extends Component {
   };
   _search = text => {
     const { asyncLoad, dispatch, page } = this.props;
-    asyncLoad(
-      dispatch(
-        getAllCards({
-          page,
-          name: text
-        })
-      )
-    );
+    let params = {
+      page,
+      name: text
+    };
+    if (!text) params = { ...params, random: true };
+    asyncLoad(dispatch(getAllCards(params)));
   };
 }
 

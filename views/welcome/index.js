@@ -1,19 +1,26 @@
 import React, { PureComponent } from "react";
-import { View, Text, Button, Image } from "react-native";
+import { View, Image } from "react-native";
+
+import Container from "../../components/Container";
+import Button from "../../components/Button";
 
 import globalStyles from "../../globalStyles";
 import styles from "./styles";
 
 import logo from "../../assets/images/logo.png";
+import swamp from "../../assets/images/swamp.jpg";
 
 export default class Welcome extends PureComponent {
   render() {
     return (
-      <View style={styles.container}>
+      <Container source={swamp} style={styles.container}>
         <Image source={logo} style={styles.logo} />
-        <Text style={styles.title}>Card Searcher</Text>
-        <Button title="Search" onPress={this._navigateToHome} />
-      </View>
+        <Button
+          text="Let's Search!"
+          onPress={this._navigateToHome}
+          style={styles.button}
+        />
+      </Container>
     );
   }
   _navigateToHome = () =>

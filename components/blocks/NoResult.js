@@ -1,6 +1,8 @@
 import React, { PureComponent } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import styled from "styled-components/native";
+
+import Text from "./Text";
 
 const Container = styled.View`
   height: 55px;
@@ -25,7 +27,7 @@ export default class NoResult extends PureComponent {
       <Container {...this.props}>
         <RedBorder />
         <View>
-          <Text>No Results Found</Text>
+          <Text size={16}>No Results Found</Text>
         </View>
       </Container>
     );

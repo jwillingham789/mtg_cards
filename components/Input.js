@@ -10,7 +10,8 @@ const Input = styled.TextInput`
   padding-right: 10px;
   height: 40px;
   border-radius: 2px;
-  font-size: 14px;
+  font-size: 16px;
+  font-family: ${globalStyles.font};
   color: ${globalStyles.black};
   width: 100%;
 `;
