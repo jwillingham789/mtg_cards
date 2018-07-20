@@ -4,16 +4,15 @@ import { View, Image } from "react-native";
 import Container from "../../components/Container";
 import Button from "../../components/Button";
 
-import globalStyles from "../../globalStyles";
 import styles from "./styles";
 
 import logo from "../../assets/images/logo.png";
-import swamp from "../../assets/images/swamp.jpg";
+import plains from "../../assets/images/plains.jpg";
 
 export default class Welcome extends PureComponent {
   render() {
     return (
-      <Container source={swamp} style={styles.container}>
+      <Container source={plains} style={styles.container}>
         <Image source={logo} style={styles.logo} />
         <Button
           text="Let's Search!"

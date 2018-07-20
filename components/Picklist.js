@@ -35,7 +35,6 @@ export default class Picklist extends Component {
         selectedValue={value}
         onValueChange={onValueChange}
         style={styles.androidPicker}
-        itemStyle={styles.itemStyle}
       >
         {items.map((i, index) => (
           <Picker.Item key={index} label={i.label} value={i.value} />
@@ -46,15 +45,13 @@ export default class Picklist extends Component {
 }
 
 const styles = StyleSheet.create({
-  itemStyle: {
-    backgroundColor: "#fff"
-  },
   androidPicker: {
     position: "absolute",
     right: 0,
     top: 0,
     height: 45,
-    width: 70,
-    backgroundColor: "transparent"
+    width: 84,
+    backgroundColor: "transparent",
+    color: "transparent"
   }
 });

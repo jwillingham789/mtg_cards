@@ -8,7 +8,6 @@ import {
   Animated,
   ActivityIndicator
 } from "react-native";
-// import ImageOverlay from "./ImageOverlay";
 
 import globalStyles from "../globalStyles";
 
@@ -155,7 +154,7 @@ export default class Card extends PureComponent {
             width={newWidth}
             height={newHeight}
             source={source}
-            resizeMode="stretch"
+            resizeMode="cover"
             onLoadEnd={this.fadeIn}
             radius={radius}
           />

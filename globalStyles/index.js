@@ -6,6 +6,5 @@ export default {
   width: width,
   font: "Beleren-Bold",
   black: "#090a0c",
-  gray: "#eeebf1",
-  orange: "#ff9800"
+  gray: "#eeebf1"
 };

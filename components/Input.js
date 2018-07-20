@@ -24,17 +24,16 @@ const Input = styled.TextInput`
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
   font-size: 16px;
-  font-family: ${globalStyles.font};
   color: ${globalStyles.black};
   height: 45px;
   flex: 1;
 `;
 const Filters = styled.TouchableOpacity`
   height: 45px;
-  width: 100px;
+  width: 84px;
   justify-content: center;
   align-items: center;
-  background-color: ${globalStyles.orange};
+  background-color: ${globalStyles.black};
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
 `;
@@ -64,7 +63,7 @@ export default class StyledInput extends PureComponent {
           />
           {items && (
             <Filters onPress={onPress} activeOpacity={0.7}>
-              <Text size={16} white>
+              <Text size={14} white>
                 {filterText.toUpperCase()}
               </Text>
             </Filters>
