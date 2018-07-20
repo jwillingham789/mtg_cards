@@ -21,6 +21,7 @@ const Input = styled.TextInput`
   background-color: #fff;
   padding-left: 10px;
   padding-right: 10px;
+  align-items: center;
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
   font-size: 16px;
